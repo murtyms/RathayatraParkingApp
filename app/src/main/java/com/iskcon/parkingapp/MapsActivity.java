@@ -2,10 +2,10 @@ package com.iskcon.parkingapp;
 
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,15 +17,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
 
     // Might be null if Google Play services APK is not available.
 
     Geocoder coder;
+    LatLngBounds.Builder builder;
+    LatLngBounds bounds;
+    CameraUpdate cu;
+    GoogleMap thisMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         coder = new Geocoder(this);
+        builder = new LatLngBounds.Builder();
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
@@ -33,7 +38,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
-
         setUpMapIfNeeded();
     }
 
@@ -69,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                Address location = addressList.get(0);
                Marker m = map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
                m.setTitle(title);
-               //builder.include(m.getPosition());
+               builder.include(m.getPosition());
            }
 
        }catch(Exception e){}
@@ -82,25 +86,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap(GoogleMap mMap) {
-       // Uri gmmuri =  Uri.parse("geo:0,0?q=101 J Morris Commons Ln, Morrisville, North+Carolina");
-        //Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmuri);
-      //  mapIntent.setPackage("com.google.android.apps.maps");
-       // startActivity(mapIntent);
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(51.508742,-0.120850)).title("Marker"));
         addParkingLot("101 J Morris Commons Ln, Morrisville, North+Carolina", mMap, "TriProperties");
         addParkingLot("6011 McCrimmon Parkway, Morrisville, North+Carolina", mMap, "Church");
         addParkingLot("309 Aviation Parkway, Morrisville, North+Carolina", mMap, "HSNC");
         addParkingLot("1020 Aviation Parkway, Morrisville, North+Carolina", mMap, "BAPS");
-
-       // LatLngBounds bounds = builder.build();
-        //CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 8);
-       // mMap.moveCamera(cu);
     }
 
     public void onMapReady(GoogleMap mMap)
     {
         if (mMap != null) {
+            thisMap = mMap;
+            thisMap.setOnMapLoadedCallback(this);
             setUpMap(mMap);
         }
+    }
+
+    public void onMapLoaded() {
+        thisMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 150));
     }
 }
