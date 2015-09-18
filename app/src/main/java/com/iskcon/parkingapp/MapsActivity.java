@@ -7,27 +7,31 @@ import android.support.v4.app.FragmentActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
+import java.util.ArrayList;
+
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnMarkerClickListener {
 
     // Might be null if Google Play services APK is not available.
 
     Geocoder coder;
     LatLngBounds.Builder builder;
-    LatLngBounds bounds;
-    CameraUpdate cu;
     GoogleMap thisMap;
+    ArrayList<Marker> markerList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         coder = new Geocoder(this);
         builder = new LatLngBounds.Builder();
+        markerList = new ArrayList<>();
+        markerList.clear();
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
@@ -35,6 +39,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
+        setTitle(R.string.title_activity_maps);
+        markerList.clear();
         setUpMapIfNeeded();
     }
 
@@ -71,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                Marker m = map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
                m.setTitle(title);
                builder.include(m.getPosition());
+               markerList.add(m);
            }
 
        }catch(Exception e){}
@@ -96,11 +103,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mMap != null) {
             thisMap = mMap;
             thisMap.setOnMapLoadedCallback(this);
+            thisMap.setOnMarkerClickListener(this);
             setUpMap(mMap);
         }
     }
 
     public void onMapLoaded() {
         thisMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 150));
+    }
+
+    public boolean onMarkerClick(final Marker marker)
+    {
+        for(int i=0; i <markerList.size(); i++)
+        {
+            Marker m = markerList.get(i);
+            if(m.equals(marker))
+            {
+                m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            }
+            else
+            {
+                m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            }
+        }
+
+        return false;
     }
 }

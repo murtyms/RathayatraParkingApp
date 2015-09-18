@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">GpsApp</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Rathayatra App</string>
+    <string name="title_activity_maps">Rathayatra Parking Map</string>
 </resources>
