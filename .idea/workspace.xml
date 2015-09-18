@@ -52,8 +52,8 @@
       <file leaf-file-name="MapsActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iskcon/parkingapp/MapsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60940325">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.07233273">
+              <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -2160,7 +2160,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/iskcon/parkingapp/MapsActivity.java</url>
-          <line>99</line>
+          <line>101</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -2323,8 +2323,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iskcon/parkingapp/MapsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60940325">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.07233273">
+          <caret line="82" column="50" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

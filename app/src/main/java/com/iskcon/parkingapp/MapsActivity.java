@@ -90,6 +90,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         addParkingLot("6011 McCrimmon Parkway, Morrisville, North+Carolina", mMap, "Church");
         addParkingLot("309 Aviation Parkway, Morrisville, North+Carolina", mMap, "HSNC");
         addParkingLot("1020 Aviation Parkway, Morrisville, North+Carolina", mMap, "BAPS");
+        addParkingLot("4309 Emperor Blvd, Morrisville, North+Carolina", mMap, "Imperial");
+        addParkingLot("905 Church St, Morrisville, North+Carolina", mMap, "Festival");
     }
 
     public void onMapReady(GoogleMap mMap)
